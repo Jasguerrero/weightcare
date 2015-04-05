@@ -6,7 +6,8 @@ class Patient extends Model{
 
 	protected $table = 'patient';
 	protected $primaryKey = 'idPatient';
-	protected $fillable = array('Name','PermanentAddress','PhoneNumber','Mail','doctor_id'						  );
+	protected $fillable = array('Name','PermanentAddress','PhoneNumber','Mail','doctor_id'
+		                		,'Age');
 					
 
 	public function doctor(){
@@ -14,7 +15,7 @@ class Patient extends Model{
 	}
 
 	public function diet(){
-		$this->hasMany('Patient');
+		$this->hasMany('Diet');
 	}
 	
 	public function appointment(){

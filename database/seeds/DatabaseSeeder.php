@@ -12,9 +12,12 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		Model::unguard();
-
-		// $this->call('UserTableSeeder');
+		 //$this->call('DoctorSeeder');
+		 $this->call('PatientSeeder');
+		 $this->call('DietSeeder');
+		 $this->call('RecipeSeeder');
+		 $this->call('AppointmentSeeder');
+		 $this->call('ClinicalRecordSeeder');
 	}
 
 }

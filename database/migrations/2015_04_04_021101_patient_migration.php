@@ -19,6 +19,7 @@ class PatientMigration extends Migration {
 			$table->string('PermanentAddress');
 			$table->integer('PhoneNumber');
 			$table->string('Mail');
+			$table->float('Age')->unsigned;
 			$table->integer('doctor_id')->unsigned();
 			$table->foreign('doctor_id')->references('idDoctor')->on('doctor');
 			$table->timestamps();
