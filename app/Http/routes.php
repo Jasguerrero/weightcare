@@ -11,11 +11,10 @@
 |
 */
 
-Route::get('/', 'WelcomeController@index');
+Route::resource('doctor','DoctorController');
+Route::resource('patient','PatientController');
+Route::resource('diet.doctor.patient','DietDoctorPatientController');
+Route::resource('recipe.diet','RecipeDietController');
+Route::resource('appointment.doctor.patient','AppointmentDoctorPatientController');
+Route::resource('clinicalrecord.patient','ClinicalRecordPatientController');
 
-Route::get('home', 'HomeController@index');
-
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
