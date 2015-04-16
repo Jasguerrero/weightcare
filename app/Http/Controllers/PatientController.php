@@ -2,9 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Doctor;
+use App\Patient;
 
 use Illuminate\Http\Request;
-use App\Patient;
 
 class PatientController extends Controller {
 
@@ -15,7 +16,7 @@ class PatientController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return 'asdfasdf';
 	}
 
 	/**
@@ -46,7 +47,11 @@ class PatientController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		$Patient = Patient::find($id);
+		if(!$Patient){
+			return response()->json(['mensaje'=>'There is no such patient','code'=>404],404);
+		}
+		return response()->json(['data'=>$Patient,200]);
 	}
 
 	/**

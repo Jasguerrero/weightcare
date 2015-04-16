@@ -12,7 +12,8 @@
 */
 
 Route::resource('doctor','DoctorController');
-Route::resource('patient','PatientController');
+Route::resource('patient','PatientController',['only'=>['index','show']]);
+Route::resource('doctor.patient', 'PatientDoctorController',['except'=>['show']]);
 Route::resource('diet.doctor.patient','DietDoctorPatientController');
 Route::resource('recipe.diet','RecipeDietController');
 Route::resource('appointment.doctor.patient','AppointmentDoctorPatientController');

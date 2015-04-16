@@ -23,6 +23,6 @@ class Patient extends Model{
 	}							
 	
 	public function clinicalrecord(){
-		$this->hasMany('ClinicalRecord')
+		$this->hasMany('ClinicalRecord');
 	}
 }

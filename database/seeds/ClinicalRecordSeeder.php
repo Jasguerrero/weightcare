@@ -16,7 +16,7 @@ class ClinicalRecordSeeder extends Seeder
 	public function run()
 	{
 		$faker = Faker::create();
-		$countpatient = Patinet::all()->count();
+		$countpatient = Patient::all()->count();
 
 		 for($i = 1; $i<$countpatient+1; $i++)
 		{
@@ -26,7 +26,7 @@ class ClinicalRecordSeeder extends Seeder
 		 		'Weight' => $faker->numberBetween(80,150),
 		 		'Size' => $faker->numberBetween(25,48),
 		 		'Muscle' => $faker->numberBetween(20,40),
-		 		'MetabolicAge' => $faker->numberBetween(20,50)
+		 		'MetablicAge' => $faker->numberBetween(20,50)
 		 	]);
 		}
 	}

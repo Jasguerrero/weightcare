@@ -48,7 +48,21 @@ class DietDoctorPatientController extends Controller {
 	 */
 	public function show($idDiet, $idDoctor, $idPatient)
 	{
-		return 'Showing diet with id: '.$idDiet.' belongs to doctor id: '.$idDoctor.' and patinet id: '.$idPatient;
+		$Diet = Diet::find($idDiet);
+		$Doctor = Doctor::find($idDoctor);
+		$Patient = Patient::find($idPatient);
+
+		$patient_id = $idPatient;
+		$doctor_id = $idDoctor;
+		$lel = Diet::find($patient_id);
+		$lel2 = Diet::find($doctor_id);
+
+		if($lel == Diet::find($patient_id) && $lel2 == Diet::find($doctor_id)){
+			return response()->json(['data'=>$Diet,200]);
+
+		}
+		else 
+			return response()->json(['mensaje'=>'There is no such Diet','code'=>404],404);
 	}
 
 	/**

@@ -18,7 +18,7 @@ class AppointmentSeeder extends Seeder
 	{
 		$faker = Faker::create();
 		$countdoctor = Doctor::all()->count();
-		$countpatient = Patinet::all()->count();
+		$countpatient = Patient::all()->count();
 
 		 for($i = 0; $i<5; $i++)
 		{

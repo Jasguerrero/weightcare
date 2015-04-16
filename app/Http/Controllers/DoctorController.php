@@ -15,7 +15,7 @@ class DoctorController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		return response()->json(['data'=>Doctor::all()],200);
 	}
 
 	/**
@@ -46,7 +46,11 @@ class DoctorController extends Controller {
 	 */
 	public function show($id)
 	{
-		return 'Showing doctor with id: '.$id;
+		$doctor = Doctor::find($id);
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+		return response()->json(['data'=>$doctor],200);
 	}
 
 	/**
