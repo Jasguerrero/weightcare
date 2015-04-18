@@ -16,7 +16,7 @@ class PatientController extends Controller {
 	 */
 	public function index()
 	{
-		return 'asdfasdf';
+		return response()->json(['data'=>Patient::all()],200);
 	}
 
 	/**

@@ -26,7 +26,7 @@ class ClinicalRecordSeeder extends Seeder
 		 		'Weight' => $faker->numberBetween(80,150),
 		 		'Size' => $faker->numberBetween(25,48),
 		 		'Muscle' => $faker->numberBetween(20,40),
-		 		'MetablicAge' => $faker->numberBetween(20,50)
+		 		'MetabolicAge' => $faker->numberBetween(20,50)
 		 	]);
 		}
 	}

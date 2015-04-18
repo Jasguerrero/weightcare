@@ -18,10 +18,12 @@ class PatientMigration extends Migration {
 			$table->string('Name');
 			$table->string('PermanentAddress');
 			$table->integer('PhoneNumber');
-			$table->string('Mail');
+			$table->string('Mail')->unique();
 			$table->float('Age')->unsigned;
 			$table->integer('doctor_id')->unsigned();
 			$table->foreign('doctor_id')->references('idDoctor')->on('doctor');
+			$table->string('Password', 60);
+			$table->rememberToken();
 			$table->timestamps();
 		});
 	}

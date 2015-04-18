@@ -23,7 +23,8 @@ class DoctorSeeder extends Seeder
 		 		'Name' => $faker->name(),
 		 		'PermanentAddress'=> $faker->address(),
 		 		'PhoneNumber' => $faker->randomNumber(7),
-		 		'Mail' => $faker->freeEmail()
+		 		'Mail' => $faker->companyEmail,
+		 		'Password' => $faker->creditCardNumber()
 		 	]);
 		}
 	}

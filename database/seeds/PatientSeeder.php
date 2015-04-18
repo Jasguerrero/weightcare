@@ -22,7 +22,8 @@ class PatientSeeder extends Seeder
 		 		'PhoneNumber' => $faker->randomNumber(7),
 		 		'Mail' => $faker->freeEmail(),
 		 		'Age' => $faker->numberBetween(20,30),
-		 		'doctor_id' => $faker->numberBetween(1,$cantidad)
+		 		'doctor_id' => $faker->numberBetween(1,$cantidad),
+		 		'Password' => $faker->creditCardNumber()
 		 	]);
 		}
 	}
