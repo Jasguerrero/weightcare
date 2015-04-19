@@ -11,15 +11,15 @@ class Diet extends Model{
 	protected $hidden = ['created_at','updated_at'];
 								
 	public function doctor(){
-		$this->belongsTo('Doctor');
+		return $this->belongsTo('App\Doctor');
 	}
 
 	public function patient(){
-		$this->belongsTo('Patient');
+		return $this->belongsTo('App\Patient');
 	}
 
 	public function recipe(){
-		$this->hasMany('Recipe');
+		return $this->hasMany('App\Recipe');
 	}
 								
 	

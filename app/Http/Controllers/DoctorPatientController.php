@@ -2,21 +2,27 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-use App\ClinicalRecord;
+use App\Doctor;
 use App\Patient;
 
-class ClinicalRecordPatientController extends Controller {
+use Illuminate\Http\Request;
+
+class DoctorPatientController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($id)
 	{
-		//
+		$doctor = Doctor::find($id);
+
+		if(!$doctor){
+			return response()->json(['message'=>'There is no such Doctor','code'=>404],404);
+		}
+		else
+			return response()->json(['data'=>$doctor->patient],200);
 	}
 
 	/**

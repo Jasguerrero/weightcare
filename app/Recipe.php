@@ -14,7 +14,7 @@ class Recipe extends Model{
 					
 
 	public function diet(){
-		$this->belongsTo('Diet');
+		return $this->belongsTo('App\Diet');
 	}							
 	
 }

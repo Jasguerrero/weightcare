@@ -4,19 +4,25 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Recipe;
-use App\Diet;
+use App\Patient;
+use App\Appointment;
 
-class RecipeDietController extends Controller {
+class PatientAppointmentController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($idPatient)
 	{
-		//
+		$patient = Patient::find($idPatient);
+
+		if(!$patient){
+			return response()->json(['message'=>'There is no such patient','code'=>404],404);
+		}
+		else
+			return response()->json(['data'=>$patient->appointment],200);
 	}
 
 	/**
@@ -45,14 +51,9 @@ class RecipeDietController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($idRecipe, $idDiet)
+	public function show($id)
 	{
-		$Recipe = Recipe::find($idRecipe);
-		$Diet = Diet::find($idDiet);
-		if(!$Recipe || !$Diet){
-			return response()->json(['mensaje'=>'There is no recipe','code'=>404],404);
-		}
-		return response()->json(['data'=>$Recipe,200]);
+		//
 	}
 
 	/**

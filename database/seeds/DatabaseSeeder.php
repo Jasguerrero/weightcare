@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		 //$this->call('DoctorSeeder');
+		 $this->call('DoctorSeeder');
 		 $this->call('PatientSeeder');
 		 $this->call('DietSeeder');
 		 $this->call('RecipeSeeder');

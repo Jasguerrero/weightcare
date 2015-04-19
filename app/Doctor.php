@@ -6,6 +6,9 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Crypt;
+use App\Patient;
+use App\Appointment;
+use App\Diet;
 
 class Doctor extends Model implements AuthenticatableContract, CanResetPasswordContract{
 
@@ -24,15 +27,15 @@ class Doctor extends Model implements AuthenticatableContract, CanResetPasswordC
     }
 
 	public function diet(){
-		$this->hasMany('Diet');
+		return $this->hasMany('App\Diet');
 	}
 
 	public function appointment(){
-		$this->hasMany('Appointment');
+		return $this->hasMany('App\Appointment');
 	}
 
 	public function patient(){
-		$this->hasMany('Patient');
+		return $this->hasMany('App\Patient');
 	}
 
 }

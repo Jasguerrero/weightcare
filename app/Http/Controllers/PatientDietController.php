@@ -2,21 +2,27 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Doctor;
-use App\Patient;
 
 use Illuminate\Http\Request;
+use App\Patient;
+use App\Diet;
 
-class PatientController extends Controller {
+class PatientDietController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($idPatient)
 	{
-		return response()->json(['data'=>Patient::all()],200);
+		$patient = Patient::find($idPatient);
+
+		if(!$patient){
+			return response()->json(['message'=>'There is no such patient','code'=>404],404);
+		}
+		else
+			return response()->json(['data'=>$patient->diet],200);
 	}
 
 	/**
@@ -47,11 +53,7 @@ class PatientController extends Controller {
 	 */
 	public function show($id)
 	{
-		$Patient = Patient::find($id);
-		if(!$Patient){
-			return response()->json(['data'=>'There is no such patient','code'=>404],404);
-		}
-		return response()->json(['data'=>$Patient,200]);
+		//
 	}
 
 	/**

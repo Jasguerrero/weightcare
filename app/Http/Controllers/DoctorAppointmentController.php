@@ -2,21 +2,28 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Doctor;
-use App\Patient;
 
 use Illuminate\Http\Request;
+use App\Appointment;
+use App\Doctor;
 
-class PatientDoctorController extends Controller {
+
+class DoctorAppointmentController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($idDoctor)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
+		}
+		else
+			return response()->json(['data'=>$doctor->appointment],200);
 	}
 
 	/**
@@ -45,9 +52,13 @@ class PatientDoctorController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($idAppointment, $idDoctor, $idPatient)
 	{
-		//
+		$Appointment = Appointment::find($idAppointment);
+		if(!$Appointment){
+			return response()->json(['data'=>'There is no such diet','code'=>404],404);
+		}
+		return response()->json(['data'=>$Appointment,200]);
 	}
 
 	/**

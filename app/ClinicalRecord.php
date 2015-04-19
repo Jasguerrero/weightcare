@@ -12,7 +12,7 @@ class ClinicalRecord extends Model{
 					
 
 	public function patient(){
-		$this->belongsTo('Patient');
+		return $this->belongsTo('App\Patient');
 	}							
 	
 }

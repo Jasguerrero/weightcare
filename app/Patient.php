@@ -27,18 +27,18 @@ class Patient extends Model implements AuthenticatableContract, CanResetPassword
 					
 
 	public function doctor(){
-		$this->belongsTo('Doctor');
+		return $this->belongsTo('App\Doctor');
 	}
 
 	public function diet(){
-		$this->hasMany('Diet');
+		return $this->hasMany('App\Diet');
 	}
 	
 	public function appointment(){
-		$this->hasMany('Appointment');
+		return $this->hasMany('App\Appointment');
 	}							
 	
 	public function clinicalrecord(){
-		$this->hasMany('ClinicalRecord');
+		return $this->hasMany('App\ClinicalRecord');
 	}
 }

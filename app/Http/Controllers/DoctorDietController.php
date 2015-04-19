@@ -8,16 +8,22 @@ use App\Diet;
 use App\Doctor;
 use App\Patient;
 
-class DietDoctorPatientController extends Controller {
+class DoctorDietController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($idDoctor)
 	{
-		//
+		$Doctor = Doctor::find($idDoctor);
+
+		if(!$Doctor){
+			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
+		}
+		else
+			return response()->json(['data'=>$Doctor->diet],200);
 	}
 
 	/**
@@ -46,23 +52,9 @@ class DietDoctorPatientController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($idDiet, $idDoctor, $idPatient)
+	public function show($id)
 	{
-		$Diet = Diet::find($idDiet);
-		$Doctor = Doctor::find($idDoctor);
-		$Patient = Patient::find($idPatient);
-
-		$patient_id = $idPatient;
-		$doctor_id = $idDoctor;
-		$lel = Diet::find($patient_id);
-		$lel2 = Diet::find($doctor_id);
-
-		if($lel == Diet::find($patient_id) && $lel2 == Diet::find($doctor_id)){
-			return response()->json(['data'=>$Diet,200]);
-
-		}
-		else 
-			return response()->json(['mensaje'=>'There is no such Diet','code'=>404],404);
+		
 	}
 
 	/**
