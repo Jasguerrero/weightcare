@@ -10,21 +10,17 @@ use App\Patient;
 use App\Appointment;
 use App\Diet;
 
-class Doctor extends Model implements AuthenticatableContract, CanResetPasswordContract{
+class Doctor extends Model {
 
-	use Authenticatable, CanResetPassword;
 
 	protected $table = 'doctor';
 	protected $primaryKey = 'idDoctor';
 	
 	protected $fillable = array('ProfessionalLicense','Name','PermanentAddress',
-								'PhoneNumber','Mail', 'Password');
+								'PhoneNumber','Mail');
 
-	protected $hidden = ['created_at','updated_at', 'Password','remember_token'];
+	protected $hidden = ['created_at','updated_at','remember_token'];
 
-	public function setPasswordAttribute($Password){
-        $this->attributes['Password']=Crypt::encrypt($Password);
-    }
 
 	public function diet(){
 		return $this->hasMany('App\Diet');

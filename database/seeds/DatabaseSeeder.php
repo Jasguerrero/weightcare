@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class DatabaseSeeder extends Seeder {
 
@@ -18,6 +19,8 @@ class DatabaseSeeder extends Seeder {
 		 $this->call('RecipeSeeder');
 		 $this->call('AppointmentSeeder');
 		 $this->call('ClinicalRecordSeeder');
+		 User::truncate();
+		 $this->call('UserSeeder');
 	}
 
 }

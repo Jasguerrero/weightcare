@@ -22,7 +22,6 @@ class PatientMigration extends Migration {
 			$table->float('Age')->unsigned;
 			$table->integer('doctor_id')->unsigned();
 			$table->foreign('doctor_id')->references('idDoctor')->on('doctor');
-			$table->string('Password', 60);
 			$table->rememberToken();
 			$table->timestamps();
 		});

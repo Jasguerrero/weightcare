@@ -9,11 +9,10 @@ use Illuminate\Http\Request;
 
 class DoctorPatientController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+	public function __construct(){
+		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+	}
+	
 	public function index($id)
 	{
 		$doctor = Doctor::find($id);
@@ -40,9 +39,23 @@ class DoctorPatientController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request, $id)
 	{
-		//
+		if(!$request->input('Mail') || !$request->input('Name') || !$request->input('Age')||
+			!$request->input('PermanentAddress') || !$request->input('PhoneNumber')){
+
+			return response()->json(['message'=>'The patient was not created','code'=>422],422);
+		}
+
+		$doctor = Doctor::find($id);
+
+		if(!$doctor){
+			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
+		}
+		
+		$doctor->patient()->create($request->all());
+		return response()->json(['message' => 'Patient created'],201);
+	
 	}
 
 	/**

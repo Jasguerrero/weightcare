@@ -20,7 +20,6 @@ class DoctorMigration extends Migration {
 			$table->string('PermanentAddress');
 			$table->integer('PhoneNumber');
 			$table->string('Mail')->unique();
-			$table->string('Password',60);
 			$table->rememberToken();
 			$table->timestamps();
 		});

@@ -7,22 +7,19 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Support\Facades\Crypt;
 
-class Patient extends Model implements AuthenticatableContract, CanResetPasswordContract{
+class Patient extends Model{
 
-	use Authenticatable, CanResetPassword;
+	
 
 	protected $table = 'patient';
 
 	protected $primaryKey = 'idPatient';
 
 	protected $fillable = array('Name','PermanentAddress','PhoneNumber','Mail','doctor_id'
-		                		,'Age','Password');
+		                		,'Age');
 
-	protected $hidden = ['created_at','updated_at', 'Password','remember_token'];
+	protected $hidden = ['created_at','updated_at','remember_token'];
 
-	public function setPasswordAttribute($Password){
-        $this->attributes['Password']=Crypt::encrypt($Password);
-    }
 
 					
 

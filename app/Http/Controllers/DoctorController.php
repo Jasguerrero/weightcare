@@ -13,6 +13,11 @@ class DoctorController extends Controller {
 	 *
 	 * @return Response
 	 */
+
+	public function __construct(){
+		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+	}
+
 	public function index()
 	{
 		return response()->json(['data'=>Doctor::all()],200);
@@ -25,7 +30,6 @@ class DoctorController extends Controller {
 	 */
 	public function create()
 	{
-		//
 	}
 
 	/**
@@ -33,9 +37,14 @@ class DoctorController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
+		if(!$request->input('Mail') || !$request->input('Name') || !$request->input('ProfessionalLicense')||
+			!$request->input('PermanentAddress') || !$request->input('PhoneNumber')){
+			return response()->json(['message'=>'The doctor was not created','code'=>422],422);
+		}
+		Doctor::create($request->all());
+		return response()->json(['message' => 'Doctor created'],201);
 	}
 
 	/**
@@ -61,7 +70,6 @@ class DoctorController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
 	}
 
 	/**
@@ -72,7 +80,6 @@ class DoctorController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
 	}
 
 	/**
