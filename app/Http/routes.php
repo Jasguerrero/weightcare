@@ -17,8 +17,10 @@ Route::resource('doctor.patient', 'DoctorPatientController',['except'=>['show']]
 Route::resource('diet','DietController',['only'=>['index','show']]);
 Route::resource('doctor.diet','DoctorDietController',['except'=>['show']]);
 Route::resource('patient.diet','PatientDietController',['only'=>['index']]);
-Route::resource('diet.recipe','DietRecipeController',['except'=>['show']]);
+Route::resource('diet.recipe','DietRecipeController',['only'=>['index']]);
+Route::resource('doctor.recipe', 'DoctorRecipeController',['except'=>['show']]);
 Route::resource('doctor.appointment','DoctorAppointmentController',['except'=>['show']]);
 Route::resource('patient.appointment','PatientAppointmentController',['only'=>['index']]);
-Route::resource('patient.clinicalrecord','PatientClinicalRecordController',['except'=>['show']]);
+Route::resource('patient.clinicalrecord','PatientClinicalRecordController',['only'=>['index']]);
+Route::resource('doctor.clinicalrecord','DoctorClinicalRecordController',['except'=>['show']]);
 

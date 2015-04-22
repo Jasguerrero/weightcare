@@ -21,6 +21,8 @@ class RecipeMigration extends Migration {
 			$table->float('Calories');
 			$table->integer('diet_id')->unsigned();
 			$table->foreign('diet_id')->references('idDiet')->on('diet');
+			$table->integer('doctor_id')->unsigned();
+			$table->foreign('doctor_id')->references('idDoctor')->on('doctor');
 			$table->timestamps();
 		});
 	}

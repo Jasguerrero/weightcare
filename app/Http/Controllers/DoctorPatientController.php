@@ -55,19 +55,8 @@ class DoctorPatientController extends Controller {
 		
 		$doctor->patient()->create($request->all());
 		return response()->json(['message' => 'Patient created'],201);
-	
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.

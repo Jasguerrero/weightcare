@@ -21,6 +21,8 @@ class ClinicalrecordMigration extends Migration {
 			$table->float('MetabolicAge');
 			$table->integer('patient_id')->unsigned();
 			$table->foreign('patient_id')->references('idPatient')->on('patient');
+			$table->integer('doctor_id')->unsigned();
+			$table->foreign('doctor_id')->references('idDoctor')->on('doctor');
 			$table->timestamps();
 		});
 	}

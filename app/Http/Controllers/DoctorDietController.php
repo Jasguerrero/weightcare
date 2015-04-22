@@ -10,11 +10,10 @@ use App\Patient;
 
 class DoctorDietController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+	public function __construct(){
+		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+	}
+	
 	public function index($idDoctor)
 	{
 		$Doctor = Doctor::find($idDoctor);
@@ -33,7 +32,7 @@ class DoctorDietController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		
 	}
 
 	/**
@@ -41,21 +40,24 @@ class DoctorDietController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request, $idDoctor)
 	{
-		//
+		if(!$request->input('RecipeDate') || !$request->input('patient_id')){
+
+			return response()->json(['message'=>'The diet was not created','code'=>422],422);
+		}
+
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
+		}
+		
+		$doctor->diet()->create($request->all());
+		return response()->json(['message' => 'Diet created'],201);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		
-	}
+
 
 	/**
 	 * Show the form for editing the specified resource.

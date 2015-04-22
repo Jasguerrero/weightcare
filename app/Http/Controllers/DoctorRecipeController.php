@@ -4,25 +4,24 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Appointment;
 use App\Doctor;
+use App\Recipe;
 
+class DoctorRecipeController extends Controller {
 
-class DoctorAppointmentController extends Controller {
-
-	public function __construct(){
+	 public function __construct(){
 		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
 	}
 	
 	public function index($idDoctor)
 	{
-		$doctor = Doctor::find($idDoctor);
+		$Doctor = Doctor::find($idDoctor);
 
-		if(!$doctor){
+		if(!$Doctor){
 			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
 		}
 		else
-			return response()->json(['data'=>$doctor->appointment],200);
+			return response()->json(['data'=>$Doctor->recipe],200);
 	}
 
 	/**
@@ -42,9 +41,10 @@ class DoctorAppointmentController extends Controller {
 	 */
 	public function store(Request $request, $idDoctor)
 	{
-		if(!$request->input('AppDate') || !$request->input('patient_id')){
+		if(!$request->input('Ingredients') || !$request->input('Image')|| !$request->input('Description')
+			|| !$request->input('Calories') || !$request->input('diet_id')){
 
-			return response()->json(['message'=>'The appointment was not created','code'=>422],422);
+			return response()->json(['message'=>'The diet was not created','code'=>422],422);
 		}
 
 		$doctor = Doctor::find($idDoctor);
@@ -53,17 +53,11 @@ class DoctorAppointmentController extends Controller {
 			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
 		}
 		
-		$doctor->appointment()->create($request->all());
-		return response()->json(['message' => 'Appointment created'],201);
+		$doctor->recipe()->create($request->all());
+		return response()->json(['message' => 'Recipe created'],201);
 	}
 
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function edit($id)
 	{
 		//

@@ -35,7 +35,7 @@ class Patient extends Model{
 		return $this->hasMany('App\Appointment');
 	}							
 	
-	public function clinicalrecord(){
+	public function clinicalrecordP(){
 		return $this->hasMany('App\ClinicalRecord');
 	}
 }

@@ -4,16 +4,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Appointment;
 use App\Doctor;
 
-
-class DoctorAppointmentController extends Controller {
+class DoctorClinicalRecordController extends Controller {
 
 	public function __construct(){
 		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
 	}
-	
+
 	public function index($idDoctor)
 	{
 		$doctor = Doctor::find($idDoctor);
@@ -22,7 +20,8 @@ class DoctorAppointmentController extends Controller {
 			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
 		}
 		else
-			return response()->json(['data'=>$doctor->appointment],200);
+			return response()->json(['data'=>$doctor->clinicalrecord],200);
+	
 	}
 
 	/**
@@ -42,9 +41,10 @@ class DoctorAppointmentController extends Controller {
 	 */
 	public function store(Request $request, $idDoctor)
 	{
-		if(!$request->input('AppDate') || !$request->input('patient_id')){
+		if(!$request->input('Weight') || !$request->input('Size')|| !$request->input('MetabolicAge')
+			|| !$request->input('patient_id') || !$request->input('Muscle')){
 
-			return response()->json(['message'=>'The appointment was not created','code'=>422],422);
+			return response()->json(['message'=>'The clinical record was not created','code'=>422],422);
 		}
 
 		$doctor = Doctor::find($idDoctor);
@@ -53,10 +53,20 @@ class DoctorAppointmentController extends Controller {
 			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
 		}
 		
-		$doctor->appointment()->create($request->all());
-		return response()->json(['message' => 'Appointment created'],201);
+		$doctor->clinicalrecord()->create($request->all());
+		return response()->json(['message' => 'Clinical Record created'],201);
 	}
 
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		//
+	}
 
 	/**
 	 * Show the form for editing the specified resource.

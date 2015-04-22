@@ -8,13 +8,17 @@ class Recipe extends Model{
 	
 	protected $primaryKey = 'idRecipe';
 
-	protected $fillable = array('Ingredients','Image','Description','Calories','diet_id');
+	protected $fillable = array('Ingredients','Image','Description','Calories','diet_id','doctor_id');
 
 	protected $hidden = ['created_at','updated_at'];
 					
 
 	public function diet(){
 		return $this->belongsTo('App\Diet');
+	}
+
+	public function doctor(){
+		return $this->belongsTo('App\Doctor');
 	}							
 	
 }
