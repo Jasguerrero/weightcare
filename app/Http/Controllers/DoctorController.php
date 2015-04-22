@@ -30,7 +30,6 @@ class DoctorController extends Controller {
 	 */
 	public function create()
 	{
-		
 	}
 
 	/**
@@ -71,7 +70,6 @@ class DoctorController extends Controller {
 	 */
 	public function edit($id)
 	{
-		
 	}
 
 	/**
@@ -82,7 +80,6 @@ class DoctorController extends Controller {
 	 */
 	public function update($id)
 	{
-		
 	}
 
 	/**
