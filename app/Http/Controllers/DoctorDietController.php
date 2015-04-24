@@ -65,9 +65,9 @@ class DoctorDietController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit()
 	{
-		//
+		
 	}
 
 	/**
@@ -76,9 +76,56 @@ class DoctorDietController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $idDoctor, $idDiet)
 	{
-		//
+		$methodR = $request->method();
+		$doctor = Doctor::find($idDoctor);
+		$flag = false;
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$diet = $doctor->diet()->find($idDiet);
+
+		if(!$diet){
+			return response()->json(['message'=>'The diet is not associated with the doctor','code'=>404],404);
+		}
+
+		$date = $request->input('RecipeDate');
+		$patientid = $request->input('patient_id');
+
+		if($methodR == 'PATCH'){
+
+			if($date !=null && $date != ''){
+				$diet->RecipeDate = $date;
+				$flag = true;
+				
+			}
+
+			if($patientid !=null && $patientid != ''){
+				$diet->patient_id = $patientid;
+				$flag = true;
+			}
+
+			if($flag == true){
+				$diet->save();
+				return response()->json(['message'=>'The diet was updated'],200);
+			}
+			else
+				return response()->json(['message'=>'Nothing to update'],200);
+		}
+
+
+		if(!$date || !$patientid){
+			return response()->json(['message'=>'We were unavailable to process the data','code'=>422],422);
+		}
+
+		$diet->RecipeDate = $date;
+		$diet->patient_id = $patientid;
+
+		$diet->save();
+		return response()->json(['message' => 'The diet was updated'],200);
 	}
 
 	/**

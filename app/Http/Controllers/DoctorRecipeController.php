@@ -69,9 +69,77 @@ class DoctorRecipeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $idDoctor, $idRecipe)
 	{
-		//
+		$methodR = $request->method();
+		$doctor = Doctor::find($idDoctor);
+		$flag = false;
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$recipe = $doctor->recipe()->find($idRecipe);
+
+		if(!$recipe){
+			return response()->json(['message'=>'The recipe is not associated with the doctor','code'=>404],404);
+		}
+
+		$ingredients = $request->input('Ingredients');
+		$dietid = $request->input('diet_id');
+		$image = $request->input('Image');
+		$description = $request->input('Description');
+		$calories = $request->input('Calories');
+
+		if($methodR == 'PATCH'){
+
+			if($ingredients !=null && $ingredients != ''){
+				$recipe->Ingredients = $ingredients;
+				$flag = true;
+				
+			}
+
+			if($dietid !=null && $dietid != ''){
+				$recipe->diet_id = $dietid;
+				$flag = true;
+			}
+
+			if($image !=null && $image != ''){
+				$recipe->Image = $image;
+				$flag = true;
+			}
+
+			if($description !=null && $description != ''){
+				$recipe->Description = $description;
+				$flag = true;
+			}
+
+			if($calories !=null && $calories != ''){
+				$recipe->Calories = $calories;
+				$flag = true;
+			}
+
+			if($flag == true){
+				$recipe->save();
+				return response()->json(['message'=>'The recipe was updated'],200);
+			}
+			else
+				return response()->json(['message'=>'Nothing to update'],200);
+		}
+
+
+		if(!$ingredients || !$dietid || !$description || !$calories){
+			return response()->json(['message'=>'We were unavailable to process the data','code'=>422],422);
+		}
+
+		$recipe->Ingredients = $ingredients;
+		$recipe->diet_id = $dietid;
+		$recipe->Image = $image;
+		$recipe->Description = $description;
+		$recipe->Calories = $calories;
+
+		$recipe->save();
+		return response()->json(['message' => 'The recipe was updated'],200);
 	}
 
 	/**

@@ -73,16 +73,73 @@ class DoctorController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
+		$methodR = $request->method();
+		$doctor = Doctor::find($id);
+		$flag = false;
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$email = $request->input('Mail');
+		$name = $request->input('Name');
+		$license = $request->input('ProfessionalLicense');
+		$address = $request->input('PermanentAddress');
+		$phone = $request->input('PhoneNumber');
+
+		if($methodR == 'PATCH'){
+
+			if($email!=null && $email != ''){
+				$doctor->Mail = $email;
+				$flag = true;
+			}
+
+			if($name!=null && $name != ''){
+				$doctor->Name = $name;
+				$flag = true;
+			}
+
+			if($license!=null && $license != ''){
+				$doctor->ProfessionalLicense = $license;
+				$flag = true;
+			}
+
+			if($address!=null && $address != ''){
+				$doctor->PermanentAddress = $address;
+				$flag = true;
+			}
+
+			if($phone!=null && $phone != ''){
+				$doctor->PhoneNumber = $phone;
+				$flag = true;
+			}
+
+			if($flag == true){
+				$doctor->save();
+				return response()->json(['message'=>'The doctor was updated'],200);
+			}
+
+			return response()->json(['message'=>'Nothing to update'],200);
+		}
+
+
+		if(!$email || !$name || !$license || !$address || !$phone){
+			return response()->json(['message'=>'We were unavailable to process the data','code'=>422],422);
+		}
+
+		$doctor->Name = $name;
+		$doctor->ProfessionalLicense = $license;
+		$doctor->Mail = $email;
+		$doctor->PermanentAddress = $address;
+		$doctor->PhoneNumber = $phone;
+
+		$doctor->save();
+		return response()->json(['message' => 'The doctor was updated'],200);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	
 	public function destroy($id)
 	{
 		//

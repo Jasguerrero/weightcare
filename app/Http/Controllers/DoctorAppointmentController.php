@@ -75,9 +75,56 @@ class DoctorAppointmentController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $idDoctor, $idAppointment)
 	{
-		//
+		$methodR = $request->method();
+		$doctor = Doctor::find($idDoctor);
+		$flag = false;
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$appointment = $doctor->appointment()->find($idAppointment);
+
+		if(!$appointment){
+			return response()->json(['message'=>'The appointment is not associated with the doctor','code'=>404],404);
+		}
+
+		$date = $request->input('AppDate');
+		$patientid = $request->input('patient_id');
+
+		if($methodR == 'PATCH'){
+
+			if($date !=null && $date != ''){
+				$appointment->AppDate = $date;
+				$flag = true;
+				
+			}
+
+			if($patientid !=null && $patientid != ''){
+				$appointment->patient_id = $patientid;
+				$flag = true;
+			}
+
+			if($flag == true){
+				$appointment->save();
+				return response()->json(['message'=>'The appointment was updated'],200);
+			}
+			else
+				return response()->json(['message'=>'Nothing to update'],200);
+		}
+
+
+		if(!$date || !$patientid){
+			return response()->json(['message'=>'We were unavailable to process the data','code'=>422],422);
+		}
+
+		$appointment->AppDate = $date;
+		$appointment->patient_id = $patientid;
+
+		$appointment->save();
+		return response()->json(['message' => 'The appointment was updated'],200);
 	}
 
 	/**

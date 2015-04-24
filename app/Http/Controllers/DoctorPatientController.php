@@ -75,9 +75,77 @@ class DoctorPatientController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $idDoctor, $idPatient)
 	{
-		//
+		$methodR = $request->method();
+		$doctor = Doctor::find($idDoctor);
+		$flag = false;
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$patient = $doctor->patient()->find($idPatient);
+
+		if(!$patient){
+			return response()->json(['message'=>'The patient is not associated with the doctor','code'=>404],404);
+		}
+
+		$email = $request->input('Mail');
+		$name = $request->input('Name');
+		$age = $request->input('Age');
+		$address = $request->input('PermanentAddress');
+		$phone = $request->input('PhoneNumber');
+
+		if($methodR == 'PATCH'){
+
+			if($email!=null && $email != ''){
+				$patient->Mail = $email;
+				$flag = true;
+				
+			}
+
+			if($name!=null && $name != ''){
+				$patient->Name = $name;
+				$flag = true;
+			}
+
+			if($age!=null && $age != ''){
+				$patient->Age = $age;
+				$flag = true;
+			}
+
+			if($address!=null && $address != ''){
+				$patient->PermanentAddress = $address;
+				$flag = true;
+			}
+
+			if($phone!=null && $phone != ''){
+				$patient->PhoneNumber = $phone;
+				$flag = true;
+			}
+
+			if($flag == true){
+				$patient->save();
+				return response()->json(['message'=>'The patient was updated'],200);
+			}
+			else
+				return response()->json(['message'=>'Nothing to update'],200);
+		}
+
+
+		if(!$email || !$name || !$age || !$address || !$phone){
+			return response()->json(['message'=>'We were unavailable to process the data','code'=>422],422);
+		}
+
+		$patient->Name = $name;
+		$patient->Age = $age;
+		$patient->Mail = $email;
+		$patient->PermanentAddress = $address;
+		$patient->PhoneNumber = $phone;
+
+		$patient->save();
+		return response()->json(['message' => 'The patient was updated'],200);
 	}
 
 	/**

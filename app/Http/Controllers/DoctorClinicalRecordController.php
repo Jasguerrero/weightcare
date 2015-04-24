@@ -21,7 +21,6 @@ class DoctorClinicalRecordController extends Controller {
 		}
 		else
 			return response()->json(['data'=>$doctor->clinicalrecord],200);
-	
 	}
 
 	/**
@@ -85,9 +84,77 @@ class DoctorClinicalRecordController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $idDoctor, $idRecord)
 	{
-		//
+		$methodR = $request->method();
+		$doctor = Doctor::find($idDoctor);
+		$flag = false;
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$record = $doctor->clinicalrecord()->find($idRecord);
+
+		if(!$record){
+			return response()->json(['message'=>'The clinical record is not associated with the doctor','code'=>404],404);
+		}
+
+		$weight = $request->input('Weight');
+		$size = $request->input('Size');
+		$muscle = $request->input('Muscle');
+		$metaage = $request->input('MetabolicAge');
+		$patientid = $request->input('patient_id');
+
+		if($methodR == 'PATCH'){
+
+			if($weight !=null && $weight != ''){
+				$record->Weight = $weight;
+				$flag = true;
+				
+			}
+
+			if($size !=null && $size != ''){
+				$record->Size = $size;
+				$flag = true;
+			}
+
+			if($muscle !=null && $muscle != ''){
+				$record->Muscle = $muscle;
+				$flag = true;
+			}
+
+			if($metaage !=null && $metaage != ''){
+				$record->MetabolicAge = $metaage;
+				$flag = true;
+			}
+
+			if($patientid !=null && $patientid != ''){
+				$record->patient_id = $patientid;
+				$flag = true;
+			}
+
+			if($flag == true){
+				$record->save();
+				return response()->json(['message'=>'The clinical record was updated'],200);
+			}
+			else
+				return response()->json(['message'=>'Nothing to update'],200);
+		}
+
+
+		if(!$weight || !$size || !$muscle || !$patientid){
+			return response()->json(['message'=>'We were unavailable to process the data','code'=>422],422);
+		}
+
+		$record->Weight = $weight;
+		$record->Size = $size;
+		$record->Muscle = $muscle;
+		$record->MetabolicAge = $metaage;
+		$record->patient_id = $patientid;
+
+		$record->save();
+		return response()->json(['message' => 'The clinical record was updated'],200);
 	}
 
 	/**
