@@ -42,12 +42,6 @@ class DoctorController extends Controller {
 		return response()->json(['message' => 'Doctor created'],201);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function show($id)
 	{
 		$doctor = Doctor::find($id);
@@ -57,22 +51,11 @@ class DoctorController extends Controller {
 		return response()->json(['data'=>$doctor],200);
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function edit($id)
 	{
+
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function update(Request $request, $id)
 	{
 		$methodR = $request->method();
@@ -139,10 +122,26 @@ class DoctorController extends Controller {
 		return response()->json(['message' => 'The doctor was updated'],200);
 	}
 
-	
-	public function destroy($id)
+	public function destroy($idDoctor)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+	
+		$doctordiet = $doctor->diet;
+		$doctorappointment = $doctor->appointment;
+		$doctorpatient = $doctor->patient;
+		$doctorrecipe = $doctor->recipe;
+		$doctorrecord = $doctor->clinicalrecord;
+
+		if(sizeof($doctordiet)+sizeof($doctorappointment)+sizeof($doctorrecipe)+sizeof($doctorrecord)>0){
+			return response()->json(['message'=>'These doctor have records, delete them first','code'=>409],409);
+		}
+
+		$doctor->delete();
+		return response()->json(['message' => 'The doctor was deleted'],200);
 	}
 
 }

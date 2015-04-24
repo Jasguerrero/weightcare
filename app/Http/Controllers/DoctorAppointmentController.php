@@ -133,9 +133,22 @@ class DoctorAppointmentController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($idDoctor, $idAppointment)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$appointment = $doctor->appointment()->find($idAppointment);
+
+		if(!$appointment){
+			return response()->json(['message'=>'The appointment is not associated with the doctor','code'=>404],404);
+		}
+
+		$appointment->delete();
+		return response()->json(['message' => 'The appointment was deleted'],200);
 	}
 
 }

@@ -154,9 +154,31 @@ class DoctorPatientController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($idDoctor, $idPatient)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$patient = $doctor->patient()->find($idPatient);
+
+		if(!$patient){
+			return response()->json(['message'=>'The patient is not associated with the doctor','code'=>404],404);
+		}
+
+		$patientrecords = $patient->clinicalrecordP;
+		$patientdiet = $patient->diet;
+		$patientappointment = $patient->appointment;
+
+
+		if(sizeof($patientrecords)+sizeof($patientdiet)+sizeof($patientappointment)>0){
+			return response()->json(['message'=>'These patient have records, delete them first','code'=>409],409);
+		}
+
+		$patient->delete();
+		return response()->json(['message' => 'The patient was deleted'],200);
 	}
 
 }

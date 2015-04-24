@@ -163,9 +163,22 @@ class DoctorClinicalRecordController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($idDoctor, $idRecord)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'There doctor was not found','code'=>404],404);
+		}
+
+		$record = $doctor->clinicalrecord()->find($idRecord);
+
+		if(!$record){
+			return response()->json(['message'=>'The clinical record is not associated with the doctor','code'=>404],404);
+		}
+
+		$record->delete();
+		return response()->json(['message' => 'The clinical record was deleted'],200);
 	}
 
 }

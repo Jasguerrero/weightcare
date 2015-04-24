@@ -21,8 +21,6 @@ class Patient extends Model{
 	protected $hidden = ['created_at','updated_at','remember_token'];
 
 
-					
-
 	public function doctor(){
 		return $this->belongsTo('App\Doctor');
 	}

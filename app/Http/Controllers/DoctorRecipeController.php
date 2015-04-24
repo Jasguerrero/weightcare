@@ -148,9 +148,22 @@ class DoctorRecipeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($idDoctor, $idRecipe)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'There doctor was not found','code'=>404],404);
+		}
+
+		$recipe = $doctor->recipe()->find($idRecipe);
+
+		if(!$recipe){
+			return response()->json(['message'=>'The recipe is not associated with the doctor','code'=>404],404);
+		}
+
+		$recipe->delete();
+		return response()->json(['message' => 'The recipe was deleted'],200);
 	}
 
 }
