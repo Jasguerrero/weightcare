@@ -9,7 +9,7 @@ use App\Doctor;
 class DoctorClinicalRecordController extends Controller {
 
 	public function __construct(){
-		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+		$this->middleware('auth.basic.once',['only'=>['store','update','destroy']]);
 	}
 
 	public function index($idDoctor)

@@ -11,7 +11,7 @@ use App\Patient;
 class DoctorDietController extends Controller {
 
 	public function __construct(){
-		$this->middleware('auth.basic',['only'=>['store','update','destroy']]);
+		$this->middleware('auth.basic.once',['only'=>['store','update','destroy']]);
 	}
 	
 	public function index($idDoctor)
@@ -134,9 +134,28 @@ class DoctorDietController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($idDoctor, $idDiet)
 	{
-		//
+		$doctor = Doctor::find($idDoctor);
+
+		if(!$doctor){
+			return response()->json(['message'=>'The doctor was not found','code'=>404],404);
+		}
+
+		$diet = $doctor->diet()->find($idDiet);
+
+		if(!$diet){
+			return response()->json(['message'=>'The diet is not associated with the doctor','code'=>404],404);
+		}
+
+		$dietrecipe = $diet->recipe;
+
+		if(sizeof($dietrecipe)>0){
+			return response()->json(['message'=>'These diet have recipes, delete them first','code'=>409],409);
+		}
+
+		$patient->delete();
+		return response()->json(['message' => 'The diet was deleted'],200);
 	}
 
 }

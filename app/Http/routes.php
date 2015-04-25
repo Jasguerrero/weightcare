@@ -24,3 +24,8 @@ Route::resource('patient.appointment','PatientAppointmentController',['only'=>['
 Route::resource('patient.clinicalrecord','PatientClinicalRecordController',['only'=>['index']]);
 Route::resource('doctor.clinicalrecord','DoctorClinicalRecordController',['except'=>['show']]);
 
+Route::pattern('unavailable','.*');
+Route::any('/{unavailable}',function(){
+ return response()->json(['message'=>'Route or method incorrect','code'=>400],400);
+});
+
