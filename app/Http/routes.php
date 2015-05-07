@@ -11,6 +11,7 @@
 |
 */
 
+//Route::get('about','AboutController@about');
 Route::resource('doctor','DoctorController');
 Route::resource('patient','PatientController',['only'=>['index','show']]);
 Route::resource('doctor.patient', 'DoctorPatientController',['except'=>['show']]);
