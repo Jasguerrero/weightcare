@@ -4,6 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Doctor;
 use App\Patient;
+use App\Http\Requests\DoctorPatientRequest;
+use Illuminate\Http\Response;
 
 use Illuminate\Http\Request;
 
@@ -39,22 +41,18 @@ class DoctorPatientController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(Request $request, $id)
+	public function store(DoctorPatientRequest $request, $id)
 	{
-		if(!$request->input('Mail') || !$request->input('Name') || !$request->input('Age')||
-			!$request->input('PermanentAddress') || !$request->input('PhoneNumber')){
-
-			return response()->json(['message'=>'The patient was not created','code'=>422],422);
-		}
-
+		$newpatient = $request->all();
 		$doctor = Doctor::find($id);
 
 		if(!$doctor){
-			return response()->json(['message'=>'There is no such doctor','code'=>404],404);
+			return response()->json(['message'=>'The doctor was not found','code'=>'404'],Response::HTTP_NOT_FOUND);
 		}
-		
-		$doctor->patient()->create($request->all());
-		return response()->json(['message' => 'Patient created'],201);
+
+		$doctor->patient()->create($newpatient);
+
+		return response()->json(['Patient created'],Response::HTTP_CREATED);
 	}
 
 
