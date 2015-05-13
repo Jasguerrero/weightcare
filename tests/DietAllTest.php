@@ -1,6 +1,6 @@
 <?php
 
-class ExampleTest extends TestCase {
+class DietAllTest extends TestCase {
 
 	/**
 	 * A basic functional test example.
@@ -9,8 +9,7 @@ class ExampleTest extends TestCase {
 	 */
 	public function testBasicExample()
 	{
-		//Doctor Get
-		$response = $this->call('GET', '/doctor');
+		$response = $this->call('GET', '/diet/');
 
 		$this->assertEquals(200, $response->getStatusCode());
 	}
